@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:alarm_puzzle/utilities/my_constant.dart';
 import 'package:alarm_puzzle/utilities/my_theme.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:word_search/word_search.dart';
 
@@ -13,32 +16,40 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   GlobalKey<_WordFindWidgetState> globalKey = GlobalKey();
+  final String apiUrl = "${MyConstant.domain}/api/getQuestion.php";
 
-  late List<WordFindQues> listQuestions;
+  // late List<WordFindQues> listQuestions;
+  late List<WordFindQues> listQuestions = [];
 
   @override
   void initState() {
     super.initState();
-    listQuestions = [
-      WordFindQues(
-        question: "What is name of this game?",
-        answer: "mario",
-        pathImage:
-            "https://www.imore.com/sites/imore.com/files/styles/xlarge_wm_brw/public/field/image/2021/03/mario-hero.jpg",
-      ),
-      WordFindQues(
-        question: "What is this animal?",
-        answer: "cat",
-        pathImage:
-            "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/domestic-cat-lies-in-a-basket-with-a-knitted-royalty-free-image-1592337336.jpg",
-      ),
-      WordFindQues(
-        question: "What is this animal name?",
-        answer: "wolf",
-        pathImage:
-            "https://earthjustice.org/sites/default/files/styles/story_800x600/public/graywolf_holly_kuchera_shutterstock.jpg?itok=jm6lTbnx",
-      ),
-    ];
+    // listQuestions = [
+    //   WordFindQues(
+    //     question: "What is name of this game?",
+    //     answer: "mario",
+    //     pathImage:
+    //         "https://www.imore.com/sites/imore.com/files/styles/xlarge_wm_brw/public/field/image/2021/03/mario-hero.jpg",
+    //   ),
+    //   WordFindQues(
+    //     question: "What is this animal?",
+    //     answer: "cat",
+    //     pathImage:
+    //         "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/domestic-cat-lies-in-a-basket-with-a-knitted-royalty-free-image-1592337336.jpg",
+    //   ),
+    //   WordFindQues(
+    //     question: "What is this animal name?",
+    //     answer: "wolf",
+    //     pathImage:
+    //         "https://earthjustice.org/sites/default/files/styles/story_800x600/public/graywolf_holly_kuchera_shutterstock.jpg?itok=jm6lTbnx",
+    //   ),
+    // ];
+  }
+
+  Future<List<dynamic>> fetchQuestion() async {
+    Response response = await Dio().get(apiUrl);
+    print(response);
+    return json.decode(response.data);
   }
 
   @override
@@ -49,18 +60,55 @@ class _GameScreenState extends State<GameScreen> {
           color: MyColors.primary,
           child: Column(
             children: [
+              // Expanded(
+              //   child: LayoutBuilder(
+              //     builder: (context, constraints) {
+              //       return Container(
+              //         color: MyColors.primary,
+              //         child: WordFindWidget(
+              //           constraints.biggest,
+              //           listQuestions.map((ques) => ques.clone()).toList(),
+              //           globalKey,
+              //           key: globalKey,
+              //         ),
+              //       );
+              //     },
+              //   ),
+              // ),
+
               Expanded(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return Container(
-                      color: MyColors.primary,
-                      child: WordFindWidget(
-                        constraints.biggest,
-                        listQuestions.map((ques) => ques.clone()).toList(),
-                        globalKey,
-                        key: globalKey,
-                      ),
-                    );
+                child: FutureBuilder<List<dynamic>>(
+                  future: fetchQuestion(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      for (var i = 0; i < snapshot.data.length; i++) {
+                        listQuestions.add(WordFindQues(
+                          question: snapshot.data[i]['question'].toString(),
+                          answer: snapshot.data[i]['answer'].toString(),
+                          pathImage: snapshot.data[i]['pathImage'].toString(),
+                        ));
+
+                        print(listQuestions[i].answer.toString());
+                      }
+
+                      return LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Container(
+                            color: MyColors.primary,
+                            child: WordFindWidget(
+                              constraints.biggest,
+                              listQuestions
+                                  .map((ques) => ques.clone())
+                                  .toList(),
+                              globalKey,
+                              key: globalKey,
+                            ),
+                          );
+                        },
+                      );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
                   },
                 ),
               ),
@@ -76,7 +124,8 @@ class WordFindWidget extends StatefulWidget {
   Size size;
   List<WordFindQues> listQuestions;
   GlobalKey<_WordFindWidgetState> globalKey;
-  WordFindWidget(this.size, this.listQuestions, this.globalKey, {Key? key}) : super(key: key);
+  WordFindWidget(this.size, this.listQuestions, this.globalKey, {Key? key})
+      : super(key: key);
 
   @override
   _WordFindWidgetState createState() => _WordFindWidgetState();
@@ -87,6 +136,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
   late List<WordFindQues> listQuestions;
   int indexQues = 0;
   int hintCount = 0;
+  int hintLimit = 3;
 
   @override
   void initState() {
@@ -114,7 +164,9 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                   child: Icon(
                     Icons.help,
                     size: 45,
-                    color: MyColors.secondary,
+                    color: hintCount < hintLimit
+                        ? MyColors.secondary
+                        : MyColors.grey,
                   ),
                 ),
                 InkWell(
@@ -136,7 +188,8 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                       child: Icon(
                         Icons.arrow_back_ios,
                         size: 45,
-                        color: MyColors.secondary,
+                        color:
+                            indexQues != 0 ? MyColors.secondary : MyColors.grey,
                       ),
                     ),
                     InkWell(
@@ -144,7 +197,9 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                       child: Icon(
                         Icons.arrow_forward_ios,
                         size: 45,
-                        color: MyColors.secondary,
+                        color: indexQues != listQuestions.length - 1
+                            ? MyColors.secondary
+                            : MyColors.grey,
                       ),
                     ),
                   ],
@@ -156,14 +211,18 @@ class _WordFindWidgetState extends State<WordFindWidget> {
             child: Container(
               alignment: Alignment.center,
               padding: EdgeInsets.all(10),
-              // child: Text("Image"),
               child: Container(
                 alignment: Alignment.center,
                 constraints: BoxConstraints(maxWidth: size.width / 2 * 1.5),
-                child: Image.network(
-                  currentQues.pathImage ?? "",
-                  fit: BoxFit.contain,
-                ),
+                child: currentQues.pathImage != 'null'
+                    ? Image.network(
+                        currentQues.pathImage!,
+                        fit: BoxFit.contain,
+                      )
+                    : Image.asset(
+                        'assets/images/logo.png',
+                        fit: BoxFit.contain,
+                      ),
               ),
             ),
           ),
@@ -183,54 +242,59 @@ class _WordFindWidgetState extends State<WordFindWidget> {
             padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
             child: LayoutBuilder(
               builder: (context, constraints) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: currentQues.puzzles.map((puzzle) {
-                    Color color = MyColors.white;
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: currentQues.puzzles.map((puzzle) {
+                        Color color = MyColors.white;
+                        if (currentQues.isDone)
+                          color = MyColors.success;
+                        else if (puzzle.hintShow)
+                          color = MyColors.secondary;
+                        else if (currentQues.isFull)
+                          color = MyColors.danger;
+                        else
+                          color = MyColors.white;
 
-                    if (currentQues.isDone)
-                      color = MyColors.success;
-                    else if (puzzle.hintShow)
-                      color = MyColors.secondary;
-                    else if (currentQues.isFull)
-                      color = MyColors.danger;
-                    else
-                      color = MyColors.white;
-
-                    return InkWell(
-                      onTap: () {
-                        if (puzzle.hintShow || currentQues.isDone) return;
-
-                        currentQues.isFull = false;
-                        puzzle.clearValue();
-                        setState(() {});
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: color,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        width: constraints.biggest.width / 7 - 6,
-                        height: constraints.biggest.width / 7 - 6,
-                        margin: EdgeInsets.all(3),
-                        child: Text(
-                          "${puzzle.currentValue ?? ''}".toUpperCase(),
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
+                        return InkWell(
+                          onTap: () {
+                            if (puzzle.hintShow || currentQues.isDone) return;
+                            currentQues.isFull = false;
+                            puzzle.clearValue();
+                            setState(() {});
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: color,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            width: constraints.biggest.width / 7 - 6,
+                            height: constraints.biggest.width / 7 - 6,
+                            margin: EdgeInsets.all(3),
+                            child: Text(
+                              "${puzzle.currentValue ?? ''}".toUpperCase(),
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
+                        );
+                      }).toList(),
+                    ),
+                  ),
                 );
               },
             ),
           ),
           Container(
+            // alphabet btn
             alignment: Alignment.center,
             padding: EdgeInsets.all(10),
             child: GridView.builder(
@@ -240,7 +304,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                 crossAxisSpacing: 4,
                 mainAxisSpacing: 4,
               ),
-              itemCount: 16,
+              itemCount: 24,
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 bool statusBtn = currentQues.puzzles
@@ -308,10 +372,10 @@ class _WordFindWidgetState extends State<WordFindWidget> {
 
     setState(() {});
 
-    final List<String?> wl = [currentQues.answer];
+    final List<String?> ans = [currentQues.answer];
 
     final WSSettings ws = WSSettings(
-      width: 16,
+      width: 24,
       height: 1,
       orientations: List.from([
         WSOrientation.horizontal,
@@ -320,7 +384,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
 
     final WordSearch wordSearch = WordSearch();
 
-    final WSNewPuzzle newPuzzle = wordSearch.newPuzzle(wl, ws);
+    final WSNewPuzzle newPuzzle = wordSearch.newPuzzle(ans, ws);
 
     if (newPuzzle.errors.isEmpty) {
       currentQues.arrayBtns = newPuzzle.puzzle.expand((list) => list).toList();
@@ -329,9 +393,10 @@ class _WordFindWidgetState extends State<WordFindWidget> {
       bool isDone = currentQues.isDone;
 
       if (!isDone) {
-        currentQues.puzzles = List.generate(wl[0]!.split("").length, (index) {
+        currentQues.puzzles = List.generate(ans[0]!.split("").length, (index) {
           return WordFindChar(
-              correctValue: currentQues.answer?.split("")[index]);
+            correctValue: currentQues.answer?.split("")[index],
+          );
         });
       }
     }
@@ -347,11 +412,11 @@ class _WordFindWidgetState extends State<WordFindWidget> {
         .where((puzzle) => !puzzle.hintShow && puzzle.currentIndex == null)
         .toList();
 
-    if (puzzleNoHint.length > 0) {
+    if (puzzleNoHint.length > 0 && hintCount < hintLimit) {
       hintCount++;
       int indexHint = Random().nextInt(puzzleNoHint.length);
       int countTemp = 0;
-      // print(indexHint);
+      print(hintCount);
 
       currentQues.puzzles = currentQues.puzzles.map((puzzle) {
         if (!puzzle.hintShow && puzzle.currentIndex == null) countTemp++;
@@ -369,13 +434,15 @@ class _WordFindWidgetState extends State<WordFindWidget> {
         currentQues.isDone = true;
         setState(() {});
 
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(Duration(seconds: 2));
         generatePuzzle(next: true);
       }
 
       setState(() {});
     }
   }
+
+  int corrected = 0;
 
   Future<void> setBtnClick(int index) async {
     WordFindQues currentQues = listQuestions[indexQues];
@@ -389,7 +456,15 @@ class _WordFindWidgetState extends State<WordFindWidget> {
           currentQues.arrayBtns?[index];
 
       if (currentQues.fieldCompleteCorrect()) {
+        // ตอบข้อนั้นถูก
+        corrected++;
         currentQues.isDone = true;
+        print(corrected);
+
+        if (corrected == listQuestions.length) {
+          // ตอบถูกครบทุกข้อ
+          print("CORRECT! GOOD JOB MATE");
+        }
         setState(() {});
 
         await Future.delayed(Duration(seconds: 1));
