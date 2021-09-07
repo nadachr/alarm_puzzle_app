@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:alarm_puzzle/utilities/my_constant.dart';
+import 'package:alarm_puzzle/utilities/my_dialog.dart';
 import 'package:alarm_puzzle/utilities/my_theme.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -442,6 +443,10 @@ class _WordFindWidgetState extends State<WordFindWidget> {
     }
   }
 
+  Future<Null> getAlarmOff() async {
+    Dio().get("${MyConstant.goApi}/1").then((value) => print(value));
+  }
+
   int corrected = 0;
 
   Future<void> setBtnClick(int index) async {
@@ -464,13 +469,23 @@ class _WordFindWidgetState extends State<WordFindWidget> {
         if (corrected == listQuestions.length) {
           // ตอบถูกครบทุกข้อ
           print("CORRECT! GOOD JOB MATE");
+          getAlarmOff();
+          Future.delayed(
+            Duration.zero,
+            () => MyDialog().onAlert(
+              context,
+              title: "เก่งมากอั้ยต้าว!",
+              content:
+                  "เก่งมาดด คราวนี้ก็ลุกขึ้นไปกินน้ำอาบข้าวซะนะ อย่าให้ต้องปลุกอีกรอบ .__.",
+            ),
+          );
         }
         setState(() {});
 
         await Future.delayed(Duration(seconds: 1));
         generatePuzzle(next: true);
       }
-
+      if (!mounted) return;
       setState(() {});
     }
   }
