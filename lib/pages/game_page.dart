@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:alarm_puzzle/pages/home_page.dart';
 import 'package:alarm_puzzle/utilities/my_constant.dart';
 import 'package:alarm_puzzle/utilities/my_dialog.dart';
 import 'package:alarm_puzzle/utilities/my_theme.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:word_search/word_search.dart';
 
 class GameScreen extends StatefulWidget {
@@ -232,10 +234,11 @@ class _WordFindWidgetState extends State<WordFindWidget> {
             padding: EdgeInsets.all(10),
             child: Text(
               currentQues.question ?? "Word Question",
-              style: TextStyle(
+              style: GoogleFonts.chakraPetch(
                 fontSize: 25,
-                color: Colors.white,
+                color: MyColors.white,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
           Container(
@@ -321,12 +324,11 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                         color: color,
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      alignment: Alignment.center,
-                      child: FlatButton(
-                        height: constraints.biggest.height,
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.zero,
+                      child: TextButton(
                         child: Text(
-                          '${currentQues.arrayBtns?[index] ?? ''}'
-                              .toUpperCase(),
+                          '${currentQues.arrayBtns?[index]}'.toUpperCase(),
                           style: TextStyle(
                             color: MyColors.primary,
                             fontSize: 25,
@@ -444,7 +446,8 @@ class _WordFindWidgetState extends State<WordFindWidget> {
   }
 
   Future<Null> getAlarmOff() async {
-    Dio().get("${MyConstant.goApi}/1").then((value) => print(value));
+    Dio().post("${MyConstant.domain}/api/setAlarm.php",
+        data: {'alarm': '1'}).then((value) => print(value));
   }
 
   int corrected = 0;
