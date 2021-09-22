@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:alarm_puzzle/pages/game_page.dart';
 import 'package:alarm_puzzle/utilities/my_constant.dart';
-import 'package:alarm_puzzle/utilities/my_dialog.dart';
 import 'package:alarm_puzzle/utilities/my_theme.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -196,7 +194,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   primary: MyColors.primary,
                                   backgroundColor: Colors.transparent,
                                 ),
-                                // onPressed: () => getAlarmOff(),
                                 onPressed: getTime() != null
                                     ? () {
                                         _onSuccess(getTime()!);

@@ -1,15 +1,13 @@
-import 'dart:convert';
 
-import 'package:alarm_puzzle/pages/api_query.dart';
 import 'package:alarm_puzzle/pages/home_page.dart';
 import 'package:alarm_puzzle/pages/game_page.dart';
-import 'package:alarm_puzzle/pages/test_list.dart';
 import 'package:alarm_puzzle/utilities/my_dialog.dart';
 import 'package:alarm_puzzle/utilities/my_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
+
+////// Code เก่า -> ใช้ MQTT
 
 void main() {
   runApp(MyApp());

@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
         primaryColor: MyColors.primary,
         secondaryHeaderColor: MyColors.secondary,
       ),
-      // home: QueryList(),
       home: MainScreen(),
     );
   }
@@ -90,67 +89,4 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     body: FutureBuilder(
-  //       future: getTimeAlarm(),
-  //       builder: (BuildContext context, AsyncSnapshot snapshot) {
-  //         if (snapshot.hasData) {
-  //           print(snapshot.data);
-
-  //           var body = json.decode(snapshot.data.data);
-  //           bool isAlert = false;
-
-  //           if (body['alarm'] == '0') {
-  //             isAlert = true;
-  //           }
-
-  //           if (isAlert) {
-  // Future.delayed(
-  //   Duration.zero,
-  //   () => MyDialog().onAlert(
-  //     context,
-  //     title: "ตื่นได้แล้วอั้ยต้าวดื้อ!",
-  //     content:
-  //         "นาฬิกาปลุกดังไม่ไหว >< เล่นเกมเพื่อปิดเสียงนาฬิกาปลุก!",
-  //   ),
-  // );
-  // return Center(
-  //   child: screens[1],
-  // );
-  //           } else {
-  //             return Center(
-  //               child: screens[0],
-  //             );
-  //           }
-  //         }
-  //         return Center(
-  //           child: screens[0],
-  //         );
-  //       },
-  //     ),
-  //     // bottomNavigationBar: BottomNavigationBar(
-  //     //   currentIndex: currentIndex,
-  //     //   onTap: (index) => setState(() => currentIndex = index),
-  //     //   backgroundColor: MyColors.primary,
-  //     //   selectedItemColor: MyColors.secondary,
-  //     //   unselectedItemColor: MyColors.grey,
-  //     //   iconSize: 40,
-  //     //   items: [
-  //     //     BottomNavigationBarItem(
-  //     //       icon: Icon(Icons.home),
-  //     //       label: 'Home',
-  //     //       backgroundColor: MyColors.secondary,
-  //     //     ),
-  //     //     BottomNavigationBarItem(
-  //     //       icon: Icon(Icons.videogame_asset),
-  //     //       label: 'Game',
-  //     //       backgroundColor: MyColors.secondary,
-  //     //     ),
-  //     //   ],
-  //     // ),
-  //   );
-  // }
 }

@@ -27,7 +27,7 @@ class _GameScreenState extends State<GameScreen> {
   @override
   void initState() {
     super.initState();
-    // listQuestions = [
+    // listQuestions = [            static question for test..
     //   WordFindQues(
     //     question: "What is name of this game?",
     //     answer: "mario",
@@ -63,7 +63,7 @@ class _GameScreenState extends State<GameScreen> {
           color: MyColors.primary,
           child: Column(
             children: [
-              // Expanded(
+              // Expanded(          for static question...
               //   child: LayoutBuilder(
               //     builder: (context, constraints) {
               //       return Container(
@@ -78,7 +78,6 @@ class _GameScreenState extends State<GameScreen> {
               //     },
               //   ),
               // ),
-
               Expanded(
                 child: FutureBuilder<List<dynamic>>(
                   future: fetchQuestion(),
@@ -445,7 +444,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
     }
   }
 
-  Future<Null> getAlarmOff() async {
+  Future<Null> setAlarmOff() async {
     Dio().post("${MyConstant.domain}/api/setAlarm.php",
         data: {'alarm': '1'}).then((value) => print(value));
   }
@@ -472,7 +471,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
         if (corrected == listQuestions.length) {
           // ตอบถูกครบทุกข้อ
           print("CORRECT! GOOD JOB MATE");
-          getAlarmOff();
+          setAlarmOff();
           Future.delayed(
             Duration.zero,
             () => MyDialog().onAlert(
