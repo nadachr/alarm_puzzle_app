@@ -1,4 +1,3 @@
-
 import 'package:alarm_puzzle/pages/home_page.dart';
 import 'package:alarm_puzzle/pages/game_page.dart';
 import 'package:alarm_puzzle/utilities/my_dialog.dart';

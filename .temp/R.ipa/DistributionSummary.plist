@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>alarm_puzzle.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>armv7</string>
+				<string>arm64</string>
+			</array>
+			<key>buildNumber</key>
+			<string>1</string>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>FFBC019FCF27C4A62C1AF1EDA76A9486825301EB</string>
+				<key>dateExpires</key>
+				<string>2/8/2565 BE</string>
+				<key>type</key>
+				<string>Apple Development</string>
+			</dict>
+			<key>embeddedBinaries</key>
+			<array>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>buildNumber</key>
+					<string>1.0</string>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>FFBC019FCF27C4A62C1AF1EDA76A9486825301EB</string>
+						<key>dateExpires</key>
+						<string>2/8/2565 BE</string>
+						<key>type</key>
+						<string>Apple Development</string>
+					</dict>
+					<key>name</key>
+					<string>App.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>QT6SW3R878</string>
+						<key>name</key>
+						<string>Nada Chr</string>
+					</dict>
+					<key>versionNumber</key>
+					<string>1.0</string>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>buildNumber</key>
+					<string>1.0</string>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>FFBC019FCF27C4A62C1AF1EDA76A9486825301EB</string>
+						<key>dateExpires</key>
+						<string>2/8/2565 BE</string>
+						<key>type</key>
+						<string>Apple Development</string>
+					</dict>
+					<key>name</key>
+					<string>Flutter.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>QT6SW3R878</string>
+						<key>name</key>
+						<string>Nada Chr</string>
+					</dict>
+					<key>versionNumber</key>
+					<string>1.0</string>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>buildNumber</key>
+					<string>1</string>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>FFBC019FCF27C4A62C1AF1EDA76A9486825301EB</string>
+						<key>dateExpires</key>
+						<string>2/8/2565 BE</string>
+						<key>type</key>
+						<string>Apple Development</string>
+					</dict>
+					<key>name</key>
+					<string>flutter_secure_storage.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>QT6SW3R878</string>
+						<key>name</key>
+						<string>Nada Chr</string>
+					</dict>
+					<key>versionNumber</key>
+					<string>3.3.1</string>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>buildNumber</key>
+					<string>1</string>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>FFBC019FCF27C4A62C1AF1EDA76A9486825301EB</string>
+						<key>dateExpires</key>
+						<string>2/8/2565 BE</string>
+						<key>type</key>
+						<string>Apple Development</string>
+					</dict>
+					<key>name</key>
+					<string>path_provider.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>QT6SW3R878</string>
+						<key>name</key>
+						<string>Nada Chr</string>
+					</dict>
+					<key>versionNumber</key>
+					<string>0.0.1</string>
+				</dict>
+			</array>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>QT6SW3R878.com.example.alarmPuzzle.290921</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>QT6SW3R878</string>
+				<key>get-task-allow</key>
+				<true/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>QT6SW3R878.com.example.alarmPuzzle.290921</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>Runner.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>aa03db99-3478-411f-b694-342d01156dce</string>
+				<key>dateExpires</key>
+				<string>6/10/2564 BE</string>
+				<key>name</key>
+				<string>iOS Team Provisioning Profile: com.example.alarmPuzzle.290921</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>QT6SW3R878</string>
+				<key>name</key>
+				<string>Nada Chr</string>
+			</dict>
+			<key>versionNumber</key>
+			<string>1.0.0</string>
+		</dict>
+	</array>
+</dict>
+</plist>
