@@ -44,10 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        width: double.infinity,
-        color: MyColors.primary,
+    return Container(
+      width: double.infinity,
+      color: MyColors.primary,
+      child: SafeArea(
         child: Column(
           children: [
             Expanded(
