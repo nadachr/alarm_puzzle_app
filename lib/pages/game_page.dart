@@ -27,26 +27,6 @@ class _GameScreenState extends State<GameScreen> {
   @override
   void initState() {
     super.initState();
-    // listQuestions = [            static question for test..
-    //   WordFindQues(
-    //     question: "What is name of this game?",
-    //     answer: "mario",
-    //     pathImage:
-    //         "https://www.imore.com/sites/imore.com/files/styles/xlarge_wm_brw/public/field/image/2021/03/mario-hero.jpg",
-    //   ),
-    //   WordFindQues(
-    //     question: "What is this animal?",
-    //     answer: "cat",
-    //     pathImage:
-    //         "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/domestic-cat-lies-in-a-basket-with-a-knitted-royalty-free-image-1592337336.jpg",
-    //   ),
-    //   WordFindQues(
-    //     question: "What is this animal name?",
-    //     answer: "wolf",
-    //     pathImage:
-    //         "https://earthjustice.org/sites/default/files/styles/story_800x600/public/graywolf_holly_kuchera_shutterstock.jpg?itok=jm6lTbnx",
-    //   ),
-    // ];
   }
 
   Future<List<dynamic>> fetchQuestion() async {
@@ -63,21 +43,6 @@ class _GameScreenState extends State<GameScreen> {
           color: MyColors.primary,
           child: Column(
             children: [
-              // Expanded(          for static question...
-              //   child: LayoutBuilder(
-              //     builder: (context, constraints) {
-              //       return Container(
-              //         color: MyColors.primary,
-              //         child: WordFindWidget(
-              //           constraints.biggest,
-              //           listQuestions.map((ques) => ques.clone()).toList(),
-              //           globalKey,
-              //           key: globalKey,
-              //         ),
-              //       );
-              //     },
-              //   ),
-              // ),
               Expanded(
                 child: FutureBuilder<List<dynamic>>(
                   future: fetchQuestion(),
@@ -133,6 +98,8 @@ class WordFindWidget extends StatefulWidget {
   _WordFindWidgetState createState() => _WordFindWidgetState();
 }
 
+int corrected = 0;
+
 class _WordFindWidgetState extends State<WordFindWidget> {
   late Size size;
   late List<WordFindQues> listQuestions;
@@ -176,6 +143,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                     widget.globalKey.currentState?.generatePuzzle(
                       loop: listQuestions.map((ques) => ques.clone()).toList(),
                     );
+                    corrected = 0;
                   },
                   child: Icon(
                     Icons.loop,
@@ -433,13 +401,31 @@ class _WordFindWidgetState extends State<WordFindWidget> {
       }).toList();
 
       if (currentQues.fieldCompleteCorrect()) {
+        // ตอบข้อนั้นถูก
+        corrected++;
         currentQues.isDone = true;
+        print(corrected);
+
+        if (corrected == listQuestions.length) {
+          // ตอบถูกครบทุกข้อ
+          print("CORRECT! GOOD JOB MATE");
+          setAlarmOff();
+          Future.delayed(
+            Duration.zero,
+            () => MyDialog().onAlert(
+              context,
+              title: "เก่งมากอั้ยต้าว!",
+              content:
+                  "เก่งมาดด คราวนี้ก็ลุกขึ้นไปกินน้ำอาบข้าวซะนะ อย่าให้ต้องปลุกอีกรอบ .__.",
+            ),
+          );
+        }
         setState(() {});
 
-        await Future.delayed(Duration(seconds: 2));
+        await Future.delayed(Duration(seconds: 1));
         generatePuzzle(next: true);
       }
-
+      if (!mounted) return;
       setState(() {});
     }
   }
@@ -448,8 +434,6 @@ class _WordFindWidgetState extends State<WordFindWidget> {
     Dio().post("${MyConstant.domain}/api/setAlarm.php",
         data: {'alarm': '1'}).then((value) => print(value));
   }
-
-  int corrected = 0;
 
   Future<void> setBtnClick(int index) async {
     WordFindQues currentQues = listQuestions[indexQues];
