@@ -19,7 +19,8 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   GlobalKey<_WordFindWidgetState> globalKey = GlobalKey();
-  final String apiUrl = "${MyConstant.domain}/api/getQuestion.php";
+  final String apiUrl =
+      "${MyConstant.domain}/alarm_puzzle_app_api/getQuestion.php";
 
   // late List<WordFindQues> listQuestions;
   late List<WordFindQues> listQuestions = [];
@@ -431,7 +432,7 @@ class _WordFindWidgetState extends State<WordFindWidget> {
   }
 
   Future<Null> setAlarmOff() async {
-    Dio().post("${MyConstant.domain}/api/setAlarm.php",
+    Dio().post("${MyConstant.domain}/alarm_puzzle_app_api/setAlarm.php",
         data: {'alarm': '1'}).then((value) => print(value));
   }
 

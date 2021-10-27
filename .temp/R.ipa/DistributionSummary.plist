@@ -7,7 +7,6 @@
 		<dict>
 			<key>architectures</key>
 			<array>
-				<string>armv7</string>
 				<string>arm64</string>
 			</array>
 			<key>buildNumber</key>
@@ -26,7 +25,6 @@
 				<dict>
 					<key>architectures</key>
 					<array>
-						<string>armv7</string>
 						<string>arm64</string>
 					</array>
 					<key>buildNumber</key>
@@ -55,7 +53,6 @@
 				<dict>
 					<key>architectures</key>
 					<array>
-						<string>armv7</string>
 						<string>arm64</string>
 					</array>
 					<key>buildNumber</key>
@@ -84,7 +81,6 @@
 				<dict>
 					<key>architectures</key>
 					<array>
-						<string>armv7</string>
 						<string>arm64</string>
 					</array>
 					<key>buildNumber</key>
@@ -113,7 +109,6 @@
 				<dict>
 					<key>architectures</key>
 					<array>
-						<string>armv7</string>
 						<string>arm64</string>
 					</array>
 					<key>buildNumber</key>
@@ -143,14 +138,14 @@
 			<key>entitlements</key>
 			<dict>
 				<key>application-identifier</key>
-				<string>QT6SW3R878.com.example.alarmPuzzle.290921</string>
+				<string>QT6SW3R878.com.example.alarmPuzzle.271021</string>
 				<key>com.apple.developer.team-identifier</key>
 				<string>QT6SW3R878</string>
 				<key>get-task-allow</key>
 				<true/>
 				<key>keychain-access-groups</key>
 				<array>
-					<string>QT6SW3R878.com.example.alarmPuzzle.290921</string>
+					<string>QT6SW3R878.com.example.alarmPuzzle.271021</string>
 				</array>
 			</dict>
 			<key>name</key>
@@ -158,11 +153,11 @@
 			<key>profile</key>
 			<dict>
 				<key>UUID</key>
-				<string>aa03db99-3478-411f-b694-342d01156dce</string>
+				<string>387aeacc-d0d6-4842-8e74-ae4e5b40bd00</string>
 				<key>dateExpires</key>
-				<string>6/10/2564 BE</string>
+				<string>3/11/2564 BE</string>
 				<key>name</key>
-				<string>iOS Team Provisioning Profile: com.example.alarmPuzzle.290921</string>
+				<string>iOS Team Provisioning Profile: com.example.alarmPuzzle.271021</string>
 			</dict>
 			<key>team</key>
 			<dict>
@@ -172,7 +167,7 @@
 				<string>Nada Chr</string>
 			</dict>
 			<key>versionNumber</key>
-			<string>1.0.0</string>
+			<string>1.0.4</string>
 		</dict>
 	</array>
 </dict>

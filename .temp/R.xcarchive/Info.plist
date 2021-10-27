@@ -8,13 +8,12 @@
 		<string>Applications/Runner.app</string>
 		<key>Architectures</key>
 		<array>
-			<string>armv7</string>
 			<string>arm64</string>
 		</array>
 		<key>CFBundleIdentifier</key>
-		<string>com.example.alarmPuzzle.290921</string>
+		<string>com.example.alarmPuzzle.271021</string>
 		<key>CFBundleShortVersionString</key>
-		<string>1.0.0</string>
+		<string>1.0.4</string>
 		<key>CFBundleVersion</key>
 		<string>1</string>
 		<key>SigningIdentity</key>
@@ -25,7 +24,7 @@
 	<key>ArchiveVersion</key>
 	<integer>2</integer>
 	<key>CreationDate</key>
-	<date>2021-10-06T09:51:29Z</date>
+	<date>2021-10-27T04:31:15Z</date>
 	<key>Name</key>
 	<string>Runner</string>
 	<key>SchemeName</key>

@@ -51,7 +51,8 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   Future<Null>? getTimeAlarm() async {
-    String apiUrl = '${MyConstant.domain}/api/getTimeAlarm.php';
+    String apiUrl =
+        '${MyConstant.domain}/alarm_puzzle_app_api/getTimeAlarm.php';
     Response response = await Dio().get(apiUrl);
     print(response.data);
     var body = json.decode(response.data);

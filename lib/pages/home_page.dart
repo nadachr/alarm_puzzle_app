@@ -235,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<Null> setTime(String time) async {
-    String apiUrl = '${MyConstant.domain}/api/setTime.php';
+    String apiUrl = '${MyConstant.domain}/alarm_puzzle_app_api/setTime.php';
 
     Dio().post(apiUrl, data: {'time': time}).then((res) async {
       var body = json.decode(res.data);
